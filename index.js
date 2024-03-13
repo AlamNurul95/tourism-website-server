@@ -26,28 +26,14 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    
 
-    //jwt
-    // app.post('/jwt',(req,res)=>{
-    //   const user=req.body;
-    //   console.log(user);
-    //   const token=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{
-    //     expiresIn:'1h'
-    //   });
-    //    res.send({token});
-    // })
+    const packageCollection=client.db('Sim&SaimDB').collection('TourPackages');
 
-    // app.get('/services',async(req,res)=>{
-    //     const cursor=serviceCollection.find();
-    //     const result=await cursor.toArray();
-    //     res.send(result);
-    // })
-
-   
-
-        
-
+    app.get('/packages',async(req,res)=>{
+      const cursor=packageCollection.find();
+      const result=await cursor.toArray();
+      res.send(result);
+  })
    
 
     // Send a ping to confirm a successful connection

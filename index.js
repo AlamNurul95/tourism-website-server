@@ -28,9 +28,15 @@ async function run() {
     await client.connect();
 
     const packageCollection=client.db('Sim&SaimDB').collection('TourPackages');
+    const blogsCollection=client.db('Sim&SaimDB').collection('Blogs');
 
     app.get('/packages',async(req,res)=>{
       const cursor=packageCollection.find();
+      const result=await cursor.toArray();
+      res.send(result);
+  })
+    app.get('/blogs',async(req,res)=>{
+      const cursor=blogsCollection.find();
       const result=await cursor.toArray();
       res.send(result);
   })

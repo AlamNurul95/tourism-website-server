@@ -40,6 +40,18 @@ async function run() {
       const result=await cursor.toArray();
       res.send(result);
   })
+
+  app.get('/packages/:id', async (req, res) => {
+    const id = req.params.id; // Corrected parameter name
+    const query = { _id: new ObjectId(id) };
+    const options = {
+        // Include only the `title`, `img`, and `date` fields in the returned document
+        projection: { title: 1, img: 1, date: 1 }
+    };
+    const result = await packageCollection.findOne(query, options);
+    res.send(result);
+});
+
    
 
     // Send a ping to confirm a successful connection

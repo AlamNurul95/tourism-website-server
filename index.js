@@ -29,6 +29,7 @@ async function run() {
 
     const packageCollection=client.db('Sim&SaimDB').collection('TourPackages');
     const blogsCollection=client.db('Sim&SaimDB').collection('Blogs');
+    const ordersCollection=client.db('Sim&SaimDB').collection('Orders');
 
     app.get('/packages',async(req,res)=>{
       const cursor=packageCollection.find();
@@ -49,6 +50,26 @@ async function run() {
         projection: { title: 1, img: 1, date: 1 }
     };
     const result = await packageCollection.findOne(query, options);
+    res.send(result);
+});
+
+//bookings
+app.get('/booking',async(req,res)=>{
+  let query={};
+      if(req.query?.email){
+        query={email:req.query.email}
+      }
+      // const cursor=ordersCollection.find(query);
+      const result=await ordersCollection.find().toArray();
+      res.send(result);
+ 
+})
+
+
+app.post('/booking',async(req,res)=>{
+    const booking=req.body;
+    console.log(booking);
+    const result=await ordersCollection.insertOne(booking);
     res.send(result);
 });
 
